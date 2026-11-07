@@ -1,7 +1,6 @@
 # Zwei Grenzen: Volumen und Gewicht – Streamlit-Demo
 
-<!-- TODO nach dem Deploy: direkt hierher den Live-Link setzen (Leerzeile davor und danach):
-**[→ Demo live ausprobieren](https://sebastianhanisch-vektor-packen-demo.streamlit.app/)** -->
+**[→ Demo live ausprobieren](https://sebastianhanisch-vektor-packen-demo.streamlit.app/)**
 
 Stück 14 der Konzepte-Reihe **„Packen: Reihenfolge und Platzierungsregel“** für die Website „Sebastian Hanisch – Operations Research und Machine Learning“ (ein Verfahren mit wachsendem Beispiel: eine Packung entsteht aus einer Reihenfolge der Teile und einer Regel, wohin das nächste kommt). Die Demo geht von einer Größe je Teil zu zwei Größen, Volumen und Gewicht, und fragt, **wonach man dann sortiert** und ob die Wahl des Sortierschlüssels oder die der Regel mehr verändert. Die Fall-Demos mit Containern zeigen die Anwendung samt Kostenmodell; diese Demo erklärt den Mechanismus davor.
 
