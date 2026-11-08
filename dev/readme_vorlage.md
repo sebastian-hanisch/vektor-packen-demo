@@ -6,7 +6,7 @@ Stück 14 der Konzepte-Reihe **„Packen: Reihenfolge und Platzierungsregel“**
 
 ## Warum dieses Problem
 
-Ein Behälter hat im Alltag zwei Grenzen zugleich: Volumen und Gewicht. Bei einer einzigen Größe sortiert man „das größte zuerst“. Bei zwei Maßen gibt es dieses „größte“ nicht, man muss erst aus beiden Zahlen eine Sortierzahl machen. Die Demo zeigt an zwölf Teilen, dass Sortieren nach nur einem der beiden Maße zwei Behälter mehr braucht als gar nicht zu sortieren, und misst dasselbe an je 100 Zufallsinstanzen in 12 Zellen.
+Ein Behälter hat im Alltag zwei Grenzen zugleich: Volumen und Gewicht. Bei einer einzigen Größe sortiert man „das größte zuerst“. Bei zwei Maßen gibt es dieses „größte“ nicht, man muss erst aus beiden Zahlen eine Sortierzahl machen. Die Demo zeigt an zwölf Teilen, dass Sortieren nach nur einem der beiden Maße einen bis zwei Behälter mehr braucht als gar nicht zu sortieren, und misst dasselbe an je 100 Zufallsinstanzen in 12 Zellen.
 
 ## Modell
 
@@ -25,10 +25,10 @@ Alle Zahlen sind Messungen an den Instanzen dieser Demo (feste Seeds), nachgerec
 | Frage | Befund |
 |---|---|
 | Handbeispiel (zwölf Teile, Summe der Volumen 329, der Gewichte 346, Schranke 4, Optimum 4) | First Fit braucht in Lieferreihenfolge **4** Behälter, nach dem Volumen **6**, nach dem Gewicht **5**, nach dem Maximum **5**, nach der Summe **4**, nach der Länge **5**, nach der normierten Summe **4** (`tests/test_algorithm.py`) |
-| Schadet Sortieren nach nur einem Maß? | In **8 von 12** Zellen (alle mit unabhängigen oder gegenläufigen Maßen) liegt First Fit mit Schlüssel Volumen und mit Schlüssel Gewicht im Mittel höher als in Lieferreihenfolge; in den **4** Zellen mit gleichlaufenden Maßen niedriger |
+| Schadet Sortieren nach nur einem Maß? | In **8 von 12** Zellen (alle mit unabhängigen oder gegenläufigen Maßen) liegt First Fit mit Schlüssel Volumen und mit Schlüssel Gewicht im Mittel höher als in Lieferreihenfolge, in 7 davon deutlich (bei unabhängigen Maßen und 12 Teilen nur um 0,02 und 0,03, innerhalb der Streuung); in den **4** Zellen mit gleichlaufenden Maßen niedriger |
 | Wie oft trifft First Fit das Optimum? | Bei 12 Teilen mit gegenläufigen Maßen nach Volumen in 16 %, nach Gewicht in 19 %, in Lieferreihenfolge in 50 % und nach der Summe in 58 % der 100 Instanzen; bei 20 Teilen in 7 %, 8 %, 71 % und 79 % der 98 entschiedenen |
 | Welcher Schlüssel ist am besten? | Die Summe liegt in allen 12 Zellen höchstens **0,02** über dem besten Schlüssel der Zelle (Mittel, auf zwei Stellen gerundet), ist aber nicht in jeder Zelle der beste. Bei gegenläufigen Maßen und 200 Teilen ist sie mit 10,58 gegen 10,85 nur wenig besser als die Lieferreihenfolge (besser in 38, schlechter in 17 von 100 Instanzen) |
-| Zählt die Regel oder der Schlüssel mehr? | In allen **12** Zellen ist der Unterschied zwischen den sieben Schlüsseln (bei gleicher Regel) größer als der zwischen den drei Regeln (bei gleichem Schlüssel): die Regeln unterscheiden sich um höchstens **0,93** Behälter, die Schlüssel um **0,08** bis **10,50** |
+| Zählt die Regel oder der Schlüssel mehr? | In allen **12** Zellen ist der Unterschied zwischen den sieben Schlüsseln (bei gleicher Regel; darunter Lieferreihenfolge und Einzelmaße) größer als der zwischen den drei Regeln (bei gleichem Schlüssel): die Regeln unterscheiden sich um höchstens **0,93** Behälter, die Schlüssel um **0,08** bis **10,50**. Unter den vier Zwei-Maß-Schlüsseln allein (Maximum, Summe, Länge, normierte Summe) liegt der Unterschied bei gleichlaufenden Maßen und 20 oder 50 Teilen auf der Höhe der Regeln (je höchstens 0,01) |
 | Wie scharf ist die Schranke? | Das Optimum liegt bei 12 und 20 Teilen im Mittel höchstens 0,07 über ihr, nur bei gegenläufigen Maßen und 20 Teilen um **0,63** (in 62 von 98 entschiedenen Instanzen darüber); bei 50 und 200 Teilen fehlt das Optimum |
 | Wirkt die Auflösung von Gleichständen? | Bei gegenläufigen Maßen ist die Summe fast konstant (50 bis 60), Gleichstände sind häufig. Mit Gleichstand nach dem größeren Volumen statt nach der Lieferreihenfolge brauchen 200 Teile im Schlüssel Summe im Mittel 12,46 statt 10,58 Behälter über der Schranke |
 | Wie viele Instanzen bleiben bei 20 Teilen offen? | **2** von 300 (beide bei gegenläufigen Maßen); die Zahl hängt von der Rechenzeit ab |

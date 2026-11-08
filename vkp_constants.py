@@ -58,7 +58,7 @@ PRESET_HELP = {
     "Handbeispiel, nach Volumen": "Zwölf Teile mit Volumen und Gewicht, sortiert wie bei einer einzigen Größe: das größte Volumen zuerst. Das Ergebnis ist zwei Behälter schlechter als das Optimum.",
     "Handbeispiel, nach der Summe": "Dieselben zwölf Teile, aber nach der Summe von Volumen und Gewicht sortiert. Jetzt ist die Packung optimal.",
     "Gegenläufige Maße, nach Gewicht": "Eine zufällige Instanz, in der ein Teil mit viel Volumen wenig Gewicht hat und umgekehrt. Sortiert nach nur einem Maß.",
-    "Gleichlaufende Maße, nach Volumen": "Eine zufällige Instanz, in der ein Teil mit viel Volumen auch viel Gewicht hat. Dann verhalten sich beide Maße wie eines.",
+    "Gleichlaufende Maße, nach Volumen": "Eine zufällige Instanz, in der ein Teil mit viel Volumen auch viel Gewicht hat. Dann verhalten sich beide Maße fast wie eines.",
 }
 
 # Text des Expanders „Annahmen, Grenzen und bekannte Probleme“; derselbe Wortlaut steht in der README (tests/test_claims.py vergleicht beide).

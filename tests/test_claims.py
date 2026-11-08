@@ -109,6 +109,17 @@ def test_sortieren_nach_einem_mass_schadet_in_acht_von_zwoelf_zellen():
     assert len(schadet) == 8 and all(zus in (1, 3) for zus, _ in schadet)
     assert len(hilft) == 4 and all(zus == 2 for zus, _ in hilft) and len(art) == 12
     assert "In **8 von 12** Zellen (alle mit unabhängigen oder gegenläufigen Maßen)" in README and "in den **4** Zellen mit gleichlaufenden Maßen niedriger" in README
+    # in 7 davon deutlich, bei unabhängigen Maßen und 12 Teilen nur um 0,02 und 0,03 (Mittel der Tabelle)
+    z = ev.zeile(1, 0)
+    _, m = ev.referenz(z)
+    assert [round(round(m[k], 2) - round(m[0], 2), 2) for k in (1, 2)] == [0.02, 0.03]
+    assert "in 7 davon deutlich (bei unabhängigen Maßen und 12 Teilen nur um 0,02 und 0,03, innerhalb der Streuung)" in README
+    from vkp_scenario import handbeispiel
+
+    hand = handbeispiel()
+    zahlen = [A.anzahl(hand.items, k, 0, hand.cap) for k in range(3)]
+    assert [zahlen[1] - zahlen[0], zahlen[2] - zahlen[0]] == [2, 1]      # Volumen +2, Gewicht +1
+    assert "einen bis zwei Behälter mehr braucht als gar nicht zu sortieren" in README
 
 
 def test_optimum_getroffen_bei_gegenlaeufigen_massen():
@@ -137,7 +148,15 @@ def test_regel_gegen_schluessel_in_allen_zellen():
     assert all(schluessel > regel for regel, schluessel in spannen.values()) and len(spannen) == 12
     assert round(max(r for r, _ in spannen.values()), 2) == 0.93
     assert round(min(s for _, s in spannen.values()), 2) == 0.08 and round(max(s for _, s in spannen.values()), 2) == 10.50
-    assert "In allen **12** Zellen ist der Unterschied zwischen den sieben Schlüsseln" in README
+    assert "In allen **12** Zellen ist der Unterschied zwischen den sieben Schlüsseln (bei gleicher Regel; darunter Lieferreihenfolge und Einzelmaße)" in README
+    # nur die vier Zwei-Maß-Schlüssel (Maximum, Summe, Länge, normiert): gleichlaufend bei 20 und 50 Teilen so klein wie die Regeln
+    for ni in (1, 2):
+        m = ev.zeile(2, ni)["mittel_schranke"]
+        w = {k: {r: round(m[k][r], 2) for r in ev.REGEL_LISTE} for k in (3, 4, 5, 6)}
+        regel = max(max(w[k].values()) - min(w[k].values()) for k in w)
+        schluessel = max(max(w[k][r] for k in w) - min(w[k][r] for k in w) for r in ev.REGEL_LISTE)
+        assert round(regel, 2) <= 0.01 and round(schluessel, 2) <= 0.01
+    assert "liegt der Unterschied bei gleichlaufenden Maßen und 20 oder 50 Teilen auf der Höhe der Regeln (je höchstens 0,01)" in README
     assert "die Regeln unterscheiden sich um höchstens **0,93** Behälter, die Schlüssel um **0,08** bis **10,50**" in README
 
 
@@ -199,3 +218,11 @@ def test_readme_nennt_die_zusammenhaenge_wie_der_code():
     assert f"Gewicht ≈ {C.GEGENLAUF_SUMME} − Volumen ± {C.RAUSCHEN}" in README and f"Gewicht = Volumen ± {C.RAUSCHEN}" in README
     assert f"{C.ILP_ZEITLIMIT:.0f} Sekunden Zeitlimit je Instanz" in README
     assert "drei Zusammenhänge × vier Teilezahlen (12, 20, 50, 200) × **100 feste Instanzen**" in README and C.MESS_N == (12, 20, 50, 200)
+
+
+def test_expander_nennt_die_gleichstandsregel_wie_der_code():
+    """Der Mathe-Expander sagt: Gleichstände bleiben in der Lieferreihenfolge (Standard des Codes); die Variante nach Volumen wird nur im Vergleich gemessen."""
+    assert "Gleichstände bleiben in der Lieferreihenfolge (die Variante nach größerem Volumen wird nur im Vergleich gemessen)" in APP
+    assert "Gleichstände zuerst nach größerem Volumen" not in APP
+    items = [(10, 20), (20, 10), (15, 15)]                     # Summe 30 bei allen drei: Gleichstand
+    assert A.reihenfolge(items, 4) == [0, 1, 2] and A.reihenfolge(items, 4, "volumen") == [1, 2, 0]

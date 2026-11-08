@@ -194,7 +194,7 @@ def verdict_messung(z: dict) -> tuple[str, str]:
     liefer = gerundet[0]
     ein = [gerundet[k] for k in C.EINZELMASS]
     if all(x > liefer for x in ein):
-        return "warning", kopf + " Nach nur einem der beiden Maße zu sortieren ist hier **schlechter als gar nicht zu sortieren**." + fuss
+        return "warning", kopf + " Nach nur einem der beiden Maße zu sortieren ist hier im Mittel **schlechter als gar nicht zu sortieren** (der Unterschied ist bei 100 Instanzen nur bei deutlichem Abstand verlässlich)." + fuss
     if all(x < liefer for x in ein):
         return "success", kopf + " Nach nur einem der beiden Maße zu sortieren **hilft** hier gegenüber der Lieferreihenfolge." + fuss
     return "info", kopf + " Nach nur einem Maß zu sortieren ist hier nicht in beiden Fällen besser oder schlechter als die Lieferreihenfolge." + fuss
@@ -216,7 +216,7 @@ def verdict_regeln(z: dict) -> tuple[str, str]:
     teil = (f"Für {C.ZUSAMMENHANG_LANG[z['zusammenhang']]} mit n = {z['n']} Teilen unterscheiden sich die drei Regeln bei gleichem Schlüssel um höchstens **{regel:.2f}** Behälter, "
             f"die sieben Schlüssel bei gleicher Regel um bis zu **{schluessel:.2f}**.")
     if schluessel > regel:
-        return "success", teil + " Der Schlüssel entscheidet hier mehr als die Regel."
+        return "success", teil + " Der Schlüssel entscheidet hier mehr als die Regel. Zu den sieben Schlüsseln gehören auch die Lieferreihenfolge und die Einzelmaße."
     if schluessel == regel:
         return "info", teil + " Beide wirken hier gleich stark."
     return "warning", teil + " Hier wirkt die Regel stärker als der Schlüssel."
